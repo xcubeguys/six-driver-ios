@@ -1,0 +1,6 @@
+framework module LSGMarqueeView {
+  umbrella header "LSGMarqueeView-umbrella.h"
+
+  export *
+  module * { export * }
+}

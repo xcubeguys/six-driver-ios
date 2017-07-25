@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ADProfileVC" customModule="Arcane_Driver" customModuleProvider="target">
+            <connections>
+                <outlet property="btnPFTakePhoto" destination="4NA-wT-7GS" id="F6o-Ty-5kz"/>
+                <outlet property="imageView" destination="uxq-5m-vjq" id="POi-Q6-jDN"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="2V2-hX-Fj9"/>
+                <outlet property="viewActivity" destination="nsI-OB-CEO" id="10K-0b-woc"/>
+                <outlet property="viewImage" destination="1EE-e9-NU6" id="cZB-vC-Lgt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PROFILE PHOTO" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FO5-Oy-CHP">
+                    <rect key="frame" x="0.0" y="263" width="375" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="GEh-de-mS9"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please take a clear photo of your face for your account. That is what riders will see in trips" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="20x-rA-Jzc">
+                    <rect key="frame" x="16" y="309" width="343" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="NFE-Lm-xEg"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                    <color key="textColor" red="0.49803921568627452" green="0.49803921568627452" blue="0.49803921568627452" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4NA-wT-7GS">
+                    <rect key="frame" x="16" y="602" width="343" height="45"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="ldy-s4-Ftw"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                    <state key="normal" title="TAKE A PHOTO">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="btnTakePhotoAction:" destination="-2" eventType="touchUpInside" id="T4c-8A-52G"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1EE-e9-NU6">
+                    <rect key="frame" x="138" y="148" width="100" height="100"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UserPic.png" translatesAutoresizingMaskIntoConstraints="NO" id="uxq-5m-vjq">
+                            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        </imageView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="AzR-EL-FLv"/>
+                        <constraint firstAttribute="trailing" secondItem="uxq-5m-vjq" secondAttribute="trailing" id="SX1-VO-0D7"/>
+                        <constraint firstAttribute="bottom" secondItem="uxq-5m-vjq" secondAttribute="bottom" id="hZJ-Rd-MgE"/>
+                        <constraint firstAttribute="width" constant="100" id="nef-6j-3HO"/>
+                        <constraint firstItem="uxq-5m-vjq" firstAttribute="top" secondItem="1EE-e9-NU6" secondAttribute="top" id="nwc-GL-m2C"/>
+                        <constraint firstItem="uxq-5m-vjq" firstAttribute="leading" secondItem="1EE-e9-NU6" secondAttribute="leading" id="wHL-SN-yON"/>
+                    </constraints>
+                </view>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nsI-OB-CEO">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="FO5-Oy-CHP" secondAttribute="trailing" id="002-kV-Nao"/>
+                <constraint firstItem="FO5-Oy-CHP" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4df-vD-1L4"/>
+                <constraint firstAttribute="bottom" secondItem="4NA-wT-7GS" secondAttribute="bottom" constant="20" id="7rd-HQ-fkc"/>
+                <constraint firstAttribute="trailing" secondItem="4NA-wT-7GS" secondAttribute="trailing" constant="16" id="8VK-cT-8Ig"/>
+                <constraint firstAttribute="trailing" secondItem="20x-rA-Jzc" secondAttribute="trailing" constant="16" id="EL3-xd-hQ8"/>
+                <constraint firstItem="20x-rA-Jzc" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="OuW-rR-K8k"/>
+                <constraint firstItem="4NA-wT-7GS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="Ydv-b7-YBJ"/>
+                <constraint firstAttribute="bottom" secondItem="nsI-OB-CEO" secondAttribute="bottom" id="cLs-hH-67G"/>
+                <constraint firstItem="1EE-e9-NU6" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="cMT-3c-GIl"/>
+                <constraint firstAttribute="trailing" secondItem="nsI-OB-CEO" secondAttribute="trailing" id="lq7-Bb-bJ5"/>
+                <constraint firstItem="FO5-Oy-CHP" firstAttribute="top" secondItem="1EE-e9-NU6" secondAttribute="bottom" constant="15" id="pyi-TM-f36"/>
+                <constraint firstItem="nsI-OB-CEO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qug-W7-RgW"/>
+                <constraint firstItem="20x-rA-Jzc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="wCQ-W7-Lkd"/>
+                <constraint firstItem="20x-rA-Jzc" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="x4q-YT-lYc"/>
+                <constraint firstItem="nsI-OB-CEO" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xQt-wJ-tYN"/>
+                <constraint firstItem="20x-rA-Jzc" firstAttribute="top" secondItem="FO5-Oy-CHP" secondAttribute="bottom" constant="0.5" id="xtF-A9-BFi"/>
+            </constraints>
+            <point key="canvasLocation" x="-23" y="44"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="UserPic.png" width="108" height="108"/>
+    </resources>
+</document>
