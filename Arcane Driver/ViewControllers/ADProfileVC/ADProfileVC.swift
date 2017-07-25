@@ -233,7 +233,7 @@ extension ADProfileVC
         
         self.dismiss(animated: true, completion: nil)*/
         
-        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        let image = info[UIImagePickerControllerEditedImage] as? UIImage
         imageView.image = image
         if let data = UIImagePNGRepresentation(image!) {
             

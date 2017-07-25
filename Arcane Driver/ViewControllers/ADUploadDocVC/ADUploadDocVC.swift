@@ -1784,7 +1784,7 @@ extension ADUploadDocVC: UIImagePickerControllerDelegate, UINavigationController
          
          self.labelInvalid.isHidden = true*/
         
-        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        let image = info[UIImagePickerControllerEditedImage] as? UIImage
         if self.activeDocument == LICENSE_FRONT_DOC || self.activeDocument == LICENSE_BACK_DOC || self.activeDocument == NRIC_FRONT_DOC || self.activeDocument == NRIC_BACK_DOC {
             if let doc = activeDocImageView as? UIButton{
             doc.setImage(image, for:.normal)
