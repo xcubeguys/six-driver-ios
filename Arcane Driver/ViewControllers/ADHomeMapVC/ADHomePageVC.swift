@@ -3420,11 +3420,7 @@ class ADHomePageVC: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegat
             ref1.updateChildValues(["online_status": "0"])
         }
         else if value == "off"{
-            count1 += 1
-            self.goOnlineAlert()
-            let ref1 = FIRDatabase.database().reference().child("drivers_data").child(self.appDelegate.userid!)
-            ref1.updateChildValues(["online_status": "1"])
-            
+            self.makeDriverOnline()
             
         }
         else {
@@ -3447,7 +3443,46 @@ class ADHomePageVC: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegat
        // progress.isHidden = false
        
     }
+ 
+ func makeDriverOnline() {
     
+    let ref1 = FIRDatabase.database().reference().child("drivers_data").child(self.appDelegate.userid!).child("block_status")
+    ref1.observeSingleEvent(of: .value, with:{ (snapshot) in
+        
+        if(snapshot.exists()){
+            let blockStatus = snapshot.value as Any
+            print(blockStatus)
+            var status = "\(blockStatus)"
+            status = status.replacingOccurrences(of: "Optional(", with: "")
+            status = status.replacingOccurrences(of: ")", with: "")
+            
+            if Int(status) == 0 {
+                self.count1 += 1
+                self.goOnlineAlert()
+                ref1.updateChildValues(["online_status": "1"])
+            }
+            else{
+                let warning = MessageView.viewFromNib(layout: .CardView)
+                warning.configureTheme(.warning)
+                warning.configureDropShadow()
+                let iconText = "" //"😶"
+                warning.configureContent(title: "", body: "You have been blocked by Admin", iconText: iconText)
+                warning.button?.isHidden = true
+                var warningConfig = SwiftMessages.defaultConfig
+                warningConfig.presentationContext = .window(windowLevel: UIWindowLevelStatusBar)
+                SwiftMessages.show(config: warningConfig, view: warning)
+            }
+        }
+        else{
+            self.count1 += 1
+            self.goOnlineAlert()
+            ref1.updateChildValues(["online_status": "1"])
+        }
+
+    } )
+    
+
+ }
     func checkOnOffFirebaseStatusWithOutAlert(){
         
         let ref = FIRDatabase.database().reference()
@@ -3592,17 +3627,14 @@ class ADHomePageVC: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegat
                 print(status)
                 print("updating proof status \(status)")
                 if(status == "1"){
-                    self.count1 += 1
-                    self.goOnlineAlert()
-                    
+                    self.makeDriverOnline()
 
                 }else{
                     self.count += 1
                     self.goOfflineAlert()
                 }
             }else{
-                self.count1 += 1
-                self.goOnlineAlert()
+                self.makeDriverOnline()
             }
         })
         
