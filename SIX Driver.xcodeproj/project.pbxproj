@@ -1264,7 +1264,7 @@
 				TargetAttributes = {
 					18536C971E039BBD005B58BD = {
 						CreatedOnToolsVersion = 8.1;
-						DevelopmentTeam = 64VY2Y867X;
+						DevelopmentTeam = KM5Q6DT6S5;
 						LastSwiftMigration = 0810;
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
@@ -1454,7 +1454,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" c318f7efab8b3f74809783c46a9104fff0439e83 c9411c81cd67482631f195867dd6b1e1e8d49ad67ec1605535cc5038f5eee0d9";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 31db30241e4c5f2cac5966a8939f8a0a15f9d3c7 8c55a94a9f83a33d7cbc2e1072bcd0f264d53aa6a3979abdc52a212de39d176c";
 		};
 		2034C72A9D288C7195E81703 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1844,7 +1844,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Arcane Driver/Arcane Driver.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Tommy Morris (XNR4RG6M85)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Tommy Morris (XNR4RG6M85)";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = KM5Q6DT6S5;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1854,7 +1854,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = SIXDriver;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "600b73d0-a2f2-4430-b181-7691b94b1f79";
 				PROVISIONING_PROFILE_SPECIFIER = SIXDriverDevelopment;
 				SWIFT_OBJC_BRIDGING_HEADER = "Arcane Driver/Constants/Arcane Driver-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";

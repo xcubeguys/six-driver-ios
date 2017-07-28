@@ -407,7 +407,17 @@ class ARMainYourTripsVC: UIViewController,UITableViewDelegate,UITableViewDataSou
                             
                             let tripId = (dataDict as AnyObject).object(forKey: "trip_id") as? String
                             
-                            let totalPrice = (dataDict as AnyObject).object(forKey: "total_price") as? Int
+                        var totalPrice = 0
+                        
+                        if let intPrice = (dataDict as AnyObject).object(forKey: "total_price") as? Int{
+                            totalPrice = intPrice
+                        }
+                        else if let strPrice = (dataDict as AnyObject).object(forKey: "total_price") as? String{
+                            totalPrice = Int(strPrice)!
+
+                        }
+                        
+                        
                             
                             let timeFormat = (dataDict as AnyObject).object(forKey: "created") as? String
                             
@@ -440,18 +450,9 @@ class ARMainYourTripsVC: UIViewController,UITableViewDelegate,UITableViewDataSou
                                 
                                 
                             }
-                            
-                            if totalPrice == nil{
+                        
+                            self.arrayOfPrice.add(totalPrice)
                                 
-                                let value = 0
-                                self.arrayOfPrice.add(value)
-                                
-                            }
-                            else{
-                                
-                                self.arrayOfPrice.add(totalPrice! as Int)
-                                
-                            }
                             if pickUpAddress == nil{
                                 
                                 self.arrayPickUp.add("")

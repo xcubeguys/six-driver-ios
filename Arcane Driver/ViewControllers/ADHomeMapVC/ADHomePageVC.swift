@@ -1995,6 +1995,13 @@ class ADHomePageVC: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegat
         self.completeTripLabel.text! = self.passTagRiderName
         self.labelPickUpRider.text! = self.passTagRiderName
         
+        if let runningDistance = UserDefaults.standard.value(forKey:"tripRunningDistance") as? Double
+        {
+            self.tripDistance = runningDistance
+
+        }
+
+        
         print(self.arrivenowLabel.text!)
         
         self.appDelegate.cancelfromrider = ""
@@ -3446,8 +3453,8 @@ class ADHomePageVC: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegat
  
  func makeDriverOnline() {
     
-    let ref1 = FIRDatabase.database().reference().child("drivers_data").child(self.appDelegate.userid!).child("block_status")
-    ref1.observeSingleEvent(of: .value, with:{ (snapshot) in
+    let ref1 = FIRDatabase.database().reference().child("drivers_data").child(self.appDelegate.userid!)
+    ref1.child("block_status").observeSingleEvent(of: .value, with:{ (snapshot) in
         
         if(snapshot.exists()){
             let blockStatus = snapshot.value as Any
@@ -3466,7 +3473,7 @@ class ADHomePageVC: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegat
                 warning.configureTheme(.warning)
                 warning.configureDropShadow()
                 let iconText = "" //"😶"
-                warning.configureContent(title: "", body: "You have been blocked by Admin", iconText: iconText)
+                warning.configureContent(title: "", body: "Your access has been deactivated. If you have any questions, email us at - info@sixtnc.com", iconText: iconText)
                 warning.button?.isHidden = true
                 var warningConfig = SwiftMessages.defaultConfig
                 warningConfig.presentationContext = .window(windowLevel: UIWindowLevelStatusBar)
@@ -3914,12 +3921,7 @@ class ADHomePageVC: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegat
             if location != nil{
                
 //                self.abc()
-                if self.tripLocation != nil
-                {
-                    let distanceTravelled = location.distance(from: self.tripLocation!)
-                    tripDistance += distanceTravelled
-                }
-                self.tripLocation = location
+
 
                 self.currentLocation = location
                 
@@ -4271,17 +4273,25 @@ class ADHomePageVC: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegat
             }
             else{
 
-                
-                self.distance3 = locations.first
-                if locations.first != nil {
-                    if distance3 == distance2{
-                        
-                    }
-                    else{
-                        self.calcDistacneDynamic()
-                    }
+                if self.tripLocation != nil
+                {
+                    let distanceTravelled = self.currentLocation.distance(from: self.tripLocation!)
+                    tripDistance += distanceTravelled
+                    UserDefaults.standard.set(tripDistance, forKey: "tripRunningDistance")
 
                 }
+                self.tripLocation = self.currentLocation
+                
+//                self.distance3 = locations.first
+//                if locations.first != nil {
+//                    if distance3 == distance2{
+//                        
+//                    }
+//                    else{
+//                        self.calcDistacneDynamic()
+//                    }
+//
+//                }
 
             }
         }
@@ -5711,7 +5721,7 @@ class ADHomePageVC: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegat
                     print("\(droploc)")
                     
                     
-                    self.urlstring = "\(live_request_url)requests/updateTrips/trip_id/\(self.trip_id)/trip_status/end/accept_status/4/distance/\(self.tripDistance/1000)/user_id/\(self.appDelegate.userid!)/end_lat/\(latitude)/end_long/\(longitude)"
+                    self.urlstring = "\(live_request_url)requests/updateTrips/trip_id/\(self.trip_id)/trip_status/end/accept_status/4/distance/\(self.tripDistance/1000)/user_id/\(self.appDelegate.userid!)/end_lat/\(latitude)/end_long/\(longitude)/toll_fee/\(totalToll)"
                     // end traip status  removed trip amount /total_amount/\(finalFormat)
                     
                     self.urlstring = self.urlstring.replacingOccurrences(of: " ", with: "%20")
@@ -5755,7 +5765,6 @@ class ADHomePageVC: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegat
                         print(self.appDelegate.trip_id)
                         self.appDelegate.trip_id = self.trip_id
                         
-                        self.insertTripsData(distancePassTh: "\(self.total/1000)", pricePassTh: "\(finalTotalPrice)")
                         
                         
                         
@@ -5763,6 +5772,9 @@ class ADHomePageVC: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegat
                             self.tripStatusUpdating(urlString: self.urlstring)
                         }
                         
+                        self.tripDistance = 0
+                        UserDefaults.standard.removeObject(forKey: "tripRunningDistance")
+
                         /*  self.viewOffline.isHidden = false
                          self.completeTripView.isHidden=true
                          self.incoming = 0
@@ -5772,13 +5784,6 @@ class ADHomePageVC: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegat
                          self.rideraddressview.isHidden = true*/
                         self.multipledestinationfare = 0
                         self.viewMap.clear()
-                        
-                        let vC = ARCompleteTripVC()
-                        vC.passSampleFinalArray = self.arrayOfSample
-                        vC.passNonDuplicateFinalArray = self.arrayOfNonDuplicate
-                        vC.modalPresentationStyle = .formSheet
-                        vC.modalTransitionStyle = .coverVertical
-                        self.present(vC, animated: true, completion: nil)
                         
                         //            self.navigationController?.pushViewController(ARCompleteTripVC(), animated: true)
                         
@@ -6344,6 +6349,66 @@ class ADHomePageVC: UIViewController,CLLocationManagerDelegate,GMSMapViewDelegat
                         self.dropDestination = CLLocation(latitude: Double(destLat)!,longitude: Double(destLong)!)
                         self.updatedloc = "0"
                         self.getCurrnentAddress(myLocation: self.dropDestination)
+                    }
+                    else if((value["accept_status"] as? String) == "4")
+                    {
+                        let pickup:NSDictionary = (value["pickup"] as? NSDictionary)!
+                        let destination:NSDictionary = (value["destination"] as? NSDictionary)!
+
+                        let pickupLat:String = (pickup["lat"] as? String)!
+                        let pickupLong:String = (pickup["long"] as? String)!
+                        let destLat:String = (destination["lat"] as? String)!
+                        let destLong:String = (destination["long"] as? String)!
+                        
+                        self.myOrigin = self.currentLocation
+                        self.myDestination = CLLocation(latitude: Double(pickupLat)!,longitude: Double(pickupLong)!)
+                        self.dropDestination = CLLocation(latitude: Double(destLat)!,longitude: Double(destLong)!)
+                        self.updatedloc = "0"
+                        self.getCurrnentAddress(myLocation: self.dropDestination)
+                        
+                        var tripAmount = "0.0"
+                        if let floatAmt = value["total_price"] as? Float{
+                            tripAmount = String(format: "%.1f", floatAmt)
+                        }
+                        else if let doubleAmt = value["total_price"] as? Double{
+                            tripAmount = String(format: "%.1d", doubleAmt)
+                        }
+                        else if let strAmt = value["total_price"] as? String{
+                            tripAmount = String(format: "%@", strAmt)
+                        }
+                        
+                        
+                        //Inserting the trip data in the Firebase
+                        let ref = FIRDatabase.database().reference().child("trips_data")
+                        
+                       let trimDistanceNew = String(format: "%.1f", self.tripDistance/1000)
+                        
+                        
+                        let newUser = [
+                            
+                            "Distance" : "\(trimDistanceNew)",
+                            "Price" : "\(tripAmount)",
+                        ]
+                        
+                        let appendingPath = ref.child(byAppendingPath: "\(self.appDelegate.trip_id!)")
+                        appendingPath.updateChildValues(newUser)
+//                        self.insertTripsData(distancePassTh: "\(self.tripDistance/1000)", pricePassTh: "\(tripAmount)")
+
+                        
+                        //Update internally as well to use in Complete trip screen
+                        
+                        UserDefaults.standard.setValue("\(tripAmount)", forKey: "completePrice")
+                        
+                        UserDefaults.standard.setValue("\(trimDistanceNew)", forKey: "completeDistance")
+
+                        let vC = ARCompleteTripVC()
+                        vC.passSampleFinalArray = self.arrayOfSample
+                        vC.passNonDuplicateFinalArray = self.arrayOfNonDuplicate
+                        vC.modalPresentationStyle = .formSheet
+                        vC.modalTransitionStyle = .coverVertical
+                        self.present(vC, animated: true, completion: nil)
+
+
                     }
 
                     print(value)

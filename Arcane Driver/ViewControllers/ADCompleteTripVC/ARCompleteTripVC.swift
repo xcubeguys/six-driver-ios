@@ -212,9 +212,9 @@ class ARCompleteTripVC: UIViewController {
             }
         
             self.distanceLabelKM.text = "Total Distance : \(distancePass) KM"
-            var total_tripamount = pricePass + self.appDelegate.final_tollfee
+            var total_tripamount = Double(pricePass)! + Double(self.appDelegate.final_tollfee)!
            // print("self.appDelegate.final_tollfee\(self.appDelegate.final_tollfee)")
-           let myFloat = (total_tripamount as NSString).doubleValue
+           let myFloat = total_tripamount
         print("myFloat\("%.2f",myFloat)")
        var value = String(format:"%.2f", myFloat)
         print("\(value)")
